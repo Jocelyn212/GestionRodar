@@ -1,32 +1,34 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { PencilIcon, TrashIcon, EyeIcon } from '@heroicons/react/24/outline'
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 function FilmList() {
-  const [films, setFilms] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState('all')
+  const [films, setFilms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    fetchFilms()
-  }, [])
+    fetchFilms();
+  }, []);
 
-  const fetchFilms = async () => {
+    const fetchFilms = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/obtenerFilmografias`)
-      setFilms(response.data)
+      const apiUrl = import.meta.env.PROD ? '/api' : import.meta.env.VITE_API_URL
+      const response = await axios.get(`${apiUrl}/obtenerFilmografias`)
+      setFilms(response.data);
     } catch (error) {
-      console.error('Error fetching films:', error)
+      console.error("Error fetching films:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const deleteFilm = async (id) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar esta filmografía?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/eliminarFilmografia/${id}`)
+        const apiUrl = import.meta.env.PROD ? '/api' : import.meta.env.VITE_API_URL
+        await axios.delete(`${apiUrl}/eliminarFilmografia/${id}`)
         setFilms(films.filter(film => film._id !== id))
       } catch (error) {
         console.error('Error deleting film:', error)
@@ -35,17 +37,17 @@ function FilmList() {
     }
   }
 
-  const filteredFilms = films.filter(film => {
-    if (filter === 'all') return true
-    return film.tipo === filter
-  })
+  const filteredFilms = films.filter((film) => {
+    if (filter === "all") return true;
+    return film.tipo === filter;
+  });
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-500"></div>
       </div>
-    )
+    );
   }
 
   return (
@@ -66,17 +68,17 @@ function FilmList() {
           <div className="sm:flex-auto">
             <div className="flex space-x-1">
               {[
-                { key: 'all', label: 'Todas' },
-                { key: 'película', label: 'Películas' },
-                { key: 'serie', label: 'Series' }
+                { key: "all", label: "Todas" },
+                { key: "película", label: "Películas" },
+                { key: "serie", label: "Series" },
               ].map((option) => (
                 <button
                   key={option.key}
                   onClick={() => setFilter(option.key)}
                   className={`px-3 py-2 text-sm font-medium rounded-md ${
                     filter === option.key
-                      ? 'bg-indigo-100 text-indigo-700'
-                      : 'text-gray-500 hover:text-gray-700'
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
                   {option.label}
@@ -90,22 +92,32 @@ function FilmList() {
       {/* Films Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filteredFilms.map((film) => (
-          <div key={film._id} className="bg-white overflow-hidden shadow rounded-lg">
+          <div
+            key={film._id}
+            className="bg-white overflow-hidden shadow rounded-lg"
+          >
             <div className="aspect-w-3 aspect-h-4">
               <img
                 src={film.urlPoster}
                 alt={film.titulo}
                 className="w-full h-64 object-cover"
                 onError={(e) => {
-                  e.target.src = 'https://res.cloudinary.com/dvoh9w1ro/image/upload/v1706542878/imagen_generica_bpgzg5.png'
+                  e.target.src =
+                    "https://res.cloudinary.com/dvoh9w1ro/image/upload/v1706542878/imagen_generica_bpgzg5.png";
                 }}
               />
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 truncate">{film.titulo}</h3>
-              <p className="text-sm text-gray-500">{film.tipo} • {film.fecha}</p>
-              <p className="text-sm text-gray-600 mt-1 line-clamp-2">{film.sinopsis}</p>
-              
+              <h3 className="text-lg font-medium text-gray-900 truncate">
+                {film.titulo}
+              </h3>
+              <p className="text-sm text-gray-500">
+                {film.tipo} • {film.fecha}
+              </p>
+              <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                {film.sinopsis}
+              </p>
+
               <div className="mt-4 flex justify-between">
                 <div className="flex space-x-2">
                   {film.linkImdb && (
@@ -120,7 +132,7 @@ function FilmList() {
                     </a>
                   )}
                 </div>
-                
+
                 <div className="flex space-x-2">
                   <Link
                     to={`/films/edit/${film._id}`}
@@ -149,7 +161,7 @@ function FilmList() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default FilmList
+export default FilmList;

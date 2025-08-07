@@ -6,6 +6,15 @@ const AuthContext = createContext()
 // Configurar axios para incluir cookies automáticamente
 axios.defaults.withCredentials = true
 
+// Función para obtener la URL base de la API
+const getApiUrl = () => {
+  // En producción, usar la URL relativa. En desarrollo, usar la variable de entorno
+  if (import.meta.env.PROD) {
+    return '/api' // URL relativa para producción
+  }
+  return import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+}
+
 export const useAuth = () => {
   const context = useContext(AuthContext)
   if (!context) {
@@ -26,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   const verifyToken = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/verify`)
+      const response = await axios.get(`${getApiUrl()}/auth/verify`)
       
       if (response.data.success) {
         setUser(response.data.user)
@@ -43,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, {
+      const response = await axios.post(`${getApiUrl()}/auth/login`, {
         username,
         password
       })
@@ -61,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/auth/logout`)
+      await axios.post(`${getApiUrl()}/auth/logout`)
     } catch (error) {
       console.error('Error al cerrar sesión:', error)
     } finally {

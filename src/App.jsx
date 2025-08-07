@@ -1,24 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { AuthProvider, useAuth } from './contexts/AuthContext'
-import Login from './components/Login'
-import Dashboard from './components/Dashboard'
-import FilmList from './components/FilmList'
-import FilmForm from './components/FilmForm'
-import Layout from './components/Layout'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import FilmList from "./components/FilmList";
+import FilmForm from "./components/FilmForm";
+import Layout from "./components/Layout";
 
 function AppContent() {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-500"></div>
       </div>
-    )
+    );
   }
 
   if (!isAuthenticated) {
-    return <Login />
+    return <Login />;
   }
 
   return (
@@ -32,7 +32,7 @@ function AppContent() {
         </Routes>
       </Layout>
     </Router>
-  )
+  );
 }
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
     <AuthProvider>
       <AppContent />
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

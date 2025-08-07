@@ -26,6 +26,7 @@ Aplicación web para gestionar una base de datos de filmografías (películas y 
 
 1. Clona el repositorio
 2. Instala las dependencias:
+
    ```bash
    pnpm install
    ```
@@ -34,7 +35,6 @@ Aplicación web para gestionar una base de datos de filmografías (películas y 
    ```bash
    cp .env.example .env
    ```
-   
 4. Edita el archivo `.env` con tus credenciales de MongoDB Atlas
 
 5. Ejecuta la aplicación:
@@ -76,27 +76,32 @@ El frontend se conecta a una API REST separada:
 Cada filmografía incluye:
 
 ### Información básica
+
 - Tipo (película/serie)
 - Fecha de estreno
 - Duración
 - URL del poster
 
 ### Títulos multiidioma
+
 - Título en español
 - Título en inglés
 - Título en catalán
 
 ### Sinopsis multiidioma
+
 - Sinopsis en español
 - Sinopsis en inglés
 - Sinopsis en catalán
 
 ### Equipo
+
 - Director
 - Guionistas
 - Reparto
 
 ### Enlaces
+
 - Link de IMDb
 - URL de YouTube (trailer)
 - URL de Making Of
@@ -119,7 +124,8 @@ VITE_MONGO_URI=tu_mongo_atlas_uri_aqui
 JWT_SECRET=tu_clave_secreta_jwt_aqui
 ```
 
-**⚠️ IMPORTANTE**: 
+**⚠️ IMPORTANTE**:
+
 - Nunca subas el archivo `.env` a GitHub
 - Cambia las credenciales por defecto en producción
 - Usa una JWT_SECRET fuerte y única

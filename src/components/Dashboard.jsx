@@ -1,44 +1,45 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { FilmIcon, PlusIcon, PencilIcon } from '@heroicons/react/24/outline'
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FilmIcon, PlusIcon, PencilIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 function Dashboard() {
   const [stats, setStats] = useState({
     total: 0,
     peliculas: 0,
     series: 0,
-    recent: []
-  })
+    recent: [],
+  });
 
   useEffect(() => {
-    fetchStats()
-  }, [])
+    fetchStats();
+  }, []);
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/obtenerFilmografias`)
+      const apiUrl = import.meta.env.PROD ? '/api' : import.meta.env.VITE_API_URL
+      const response = await axios.get(`${apiUrl}/obtenerFilmografias`)
       const filmografias = response.data
       
-      const peliculas = filmografias.filter(f => f.tipo === 'película').length
-      const series = filmografias.filter(f => f.tipo === 'serie').length
-      const recent = filmografias.slice(-5).reverse()
+      const peliculas = filmografias.filter((f) => f.tipo === "película").length;
+      const series = filmografias.filter((f) => f.tipo === "serie").length;
+      const recent = filmografias.slice(-5).reverse();
 
       setStats({
         total: filmografias.length,
         peliculas,
         series,
-        recent
-      })
+        recent,
+      });
     } catch (error) {
-      console.error('Error fetching stats:', error)
+      console.error("Error fetching stats:", error);
     }
-  }
+  };
 
   return (
     <div className="px-4 py-6 sm:px-0">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
-      
+
       {/* Stats */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 mb-8">
         <div className="bg-white overflow-hidden shadow rounded-lg">
@@ -52,7 +53,9 @@ function Dashboard() {
                   <dt className="text-sm font-medium text-gray-500 truncate">
                     Total Filmografías
                   </dt>
-                  <dd className="text-lg font-medium text-gray-900">{stats.total}</dd>
+                  <dd className="text-lg font-medium text-gray-900">
+                    {stats.total}
+                  </dd>
                 </dl>
               </div>
             </div>
@@ -70,7 +73,9 @@ function Dashboard() {
                   <dt className="text-sm font-medium text-gray-500 truncate">
                     Películas
                   </dt>
-                  <dd className="text-lg font-medium text-gray-900">{stats.peliculas}</dd>
+                  <dd className="text-lg font-medium text-gray-900">
+                    {stats.peliculas}
+                  </dd>
                 </dl>
               </div>
             </div>
@@ -88,7 +93,9 @@ function Dashboard() {
                   <dt className="text-sm font-medium text-gray-500 truncate">
                     Series
                   </dt>
-                  <dd className="text-lg font-medium text-gray-900">{stats.series}</dd>
+                  <dd className="text-lg font-medium text-gray-900">
+                    {stats.series}
+                  </dd>
                 </dl>
               </div>
             </div>
@@ -132,19 +139,27 @@ function Dashboard() {
           {stats.recent.length > 0 ? (
             <div className="space-y-3">
               {stats.recent.map((film) => (
-                <div key={film._id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                <div
+                  key={film._id}
+                  className="flex items-center justify-between p-3 border border-gray-200 rounded-lg"
+                >
                   <div className="flex items-center">
                     <img
                       src={film.urlPoster}
                       alt={film.titulo}
                       className="h-12 w-8 object-cover rounded mr-3"
                       onError={(e) => {
-                        e.target.src = 'https://res.cloudinary.com/dvoh9w1ro/image/upload/v1706542878/imagen_generica_bpgzg5.png'
+                        e.target.src =
+                          "https://res.cloudinary.com/dvoh9w1ro/image/upload/v1706542878/imagen_generica_bpgzg5.png";
                       }}
                     />
                     <div>
-                      <p className="text-sm font-medium text-gray-900">{film.titulo}</p>
-                      <p className="text-sm text-gray-500">{film.tipo} • {film.fecha}</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        {film.titulo}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {film.tipo} • {film.fecha}
+                      </p>
                     </div>
                   </div>
                   <Link
@@ -162,7 +177,7 @@ function Dashboard() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;
