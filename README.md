@@ -44,8 +44,8 @@ Aplicación web para gestionar una base de datos de filmografías (películas y 
 
 ## 🔑 Credenciales de acceso
 
-- **Usuario**: admin
-- **Contraseña**: admin123
+- **Usuario**: usuario
+- **Contraseña**: contraseña elegida
 
 ## 📁 Estructura del proyecto
 
