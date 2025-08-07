@@ -17,11 +17,15 @@ function Dashboard() {
 
   const fetchStats = async () => {
     try {
-      const apiUrl = import.meta.env.PROD ? '/api' : import.meta.env.VITE_API_URL
-      const response = await axios.get(`${apiUrl}/obtenerFilmografias`)
-      const filmografias = response.data
-      
-      const peliculas = filmografias.filter((f) => f.tipo === "película").length;
+      const apiUrl = import.meta.env.PROD
+        ? "/api"
+        : import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${apiUrl}/obtenerFilmografias`);
+      const filmografias = response.data;
+
+      const peliculas = filmografias.filter(
+        (f) => f.tipo === "película"
+      ).length;
       const series = filmografias.filter((f) => f.tipo === "serie").length;
       const recent = filmografias.slice(-5).reverse();
 

@@ -12,10 +12,12 @@ function FilmList() {
     fetchFilms();
   }, []);
 
-    const fetchFilms = async () => {
+  const fetchFilms = async () => {
     try {
-      const apiUrl = import.meta.env.PROD ? '/api' : import.meta.env.VITE_API_URL
-      const response = await axios.get(`${apiUrl}/obtenerFilmografias`)
+      const apiUrl = import.meta.env.PROD
+        ? "/api"
+        : import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${apiUrl}/obtenerFilmografias`);
       setFilms(response.data);
     } catch (error) {
       console.error("Error fetching films:", error);
@@ -25,17 +27,21 @@ function FilmList() {
   };
 
   const deleteFilm = async (id) => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar esta filmografía?')) {
+    if (
+      window.confirm("¿Estás seguro de que quieres eliminar esta filmografía?")
+    ) {
       try {
-        const apiUrl = import.meta.env.PROD ? '/api' : import.meta.env.VITE_API_URL
-        await axios.delete(`${apiUrl}/eliminarFilmografia/${id}`)
-        setFilms(films.filter(film => film._id !== id))
+        const apiUrl = import.meta.env.PROD
+          ? "/api"
+          : import.meta.env.VITE_API_URL;
+        await axios.delete(`${apiUrl}/eliminarFilmografia/${id}`);
+        setFilms(films.filter((film) => film._id !== id));
       } catch (error) {
-        console.error('Error deleting film:', error)
-        alert('Error al eliminar la filmografía')
+        console.error("Error deleting film:", error);
+        alert("Error al eliminar la filmografía");
       }
     }
-  }
+  };
 
   const filteredFilms = films.filter((film) => {
     if (filter === "all") return true;

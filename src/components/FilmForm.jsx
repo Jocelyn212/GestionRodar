@@ -12,7 +12,6 @@ function FilmForm() {
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -31,10 +30,12 @@ function FilmForm() {
     }
   }, [id, isEdit]);
 
-    const fetchFilm = async () => {
+  const fetchFilm = async () => {
     try {
-      const apiUrl = import.meta.env.PROD ? '/api' : import.meta.env.VITE_API_URL
-      const response = await axios.get(`${apiUrl}/obtenerFilmografia/${id}`)
+      const apiUrl = import.meta.env.PROD
+        ? "/api"
+        : import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${apiUrl}/obtenerFilmografia/${id}`);
       const film = response.data;
 
       // Llenar el formulario con los datos existentes
@@ -55,8 +56,10 @@ function FilmForm() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const apiUrl = import.meta.env.PROD ? '/api' : import.meta.env.VITE_API_URL
-      
+      const apiUrl = import.meta.env.PROD
+        ? "/api"
+        : import.meta.env.VITE_API_URL;
+
       if (isEdit) {
         const response = await axios.put(
           `${apiUrl}/actualizarFilmografia/${id}`,
@@ -66,10 +69,7 @@ function FilmForm() {
           alert("Filmografía actualizada correctamente");
         }
       } else {
-        const response = await axios.post(
-          `${apiUrl}/nuevaFilmografia`,
-          data
-        );
+        const response = await axios.post(`${apiUrl}/nuevaFilmografia`, data);
         if (response.data.success) {
           alert("Filmografía creada correctamente");
         }
@@ -102,7 +102,7 @@ function FilmForm() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           {/* Información básica */}
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-sky-100 shadow rounded-lg p-6">
             <h2 className="text-lg font-medium text-gray-900 mb-4">
               Información Básica
             </h2>
@@ -114,7 +114,7 @@ function FilmForm() {
                 </label>
                 <select
                   {...register("tipo", { required: "El tipo es requerido" })}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 >
                   <option value="película">Película</option>
                   <option value="serie">Serie</option>
@@ -133,7 +133,7 @@ function FilmForm() {
                 <input
                   type="number"
                   {...register("fecha", { required: "La fecha es requerida" })}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="2024"
                 />
                 {errors.fecha && (
@@ -150,7 +150,7 @@ function FilmForm() {
                 <input
                   type="number"
                   {...register("duracion")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="120"
                 />
               </div>
@@ -162,7 +162,7 @@ function FilmForm() {
                 <input
                   type="url"
                   {...register("urlPoster")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="https://..."
                 />
               </div>
@@ -170,7 +170,7 @@ function FilmForm() {
           </div>
 
           {/* Títulos */}
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-sky-100 shadow rounded-lg p-6">
             <h2 className="text-lg font-medium text-gray-900 mb-4">Títulos</h2>
 
             <div className="space-y-4">
@@ -183,7 +183,7 @@ function FilmForm() {
                   {...register("titulo", {
                     required: "El título es requerido",
                   })}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
                 {errors.titulo && (
                   <p className="mt-1 text-sm text-red-600">
@@ -199,7 +199,7 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("tituloEn")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
 
@@ -210,14 +210,14 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("tituloCat")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
             </div>
           </div>
 
           {/* Sinopsis */}
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-sky-100 shadow rounded-lg p-6">
             <h2 className="text-lg font-medium text-gray-900 mb-4">Sinopsis</h2>
 
             <div className="space-y-4">
@@ -230,7 +230,7 @@ function FilmForm() {
                   {...register("sinopsis", {
                     required: "La sinopsis es requerida",
                   })}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
                 {errors.sinopsis && (
                   <p className="mt-1 text-sm text-red-600">
@@ -246,7 +246,7 @@ function FilmForm() {
                 <textarea
                   rows={4}
                   {...register("sinopsisEn")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
 
@@ -257,14 +257,14 @@ function FilmForm() {
                 <textarea
                   rows={4}
                   {...register("sinopsisCat")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
             </div>
           </div>
 
           {/* Género */}
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-sky-100 shadow rounded-lg p-6">
             <h2 className="text-lg font-medium text-gray-900 mb-4">Género</h2>
 
             <div className="space-y-4">
@@ -275,7 +275,7 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("genero")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="Drama, Acción, Comedia..."
                 />
               </div>
@@ -287,7 +287,7 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("generoEn")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
 
@@ -298,14 +298,14 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("generoCat")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
             </div>
           </div>
 
           {/* Equipo */}
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-sky-100 shadow rounded-lg p-6">
             <h2 className="text-lg font-medium text-gray-900 mb-4">Equipo</h2>
 
             <div className="space-y-4">
@@ -316,7 +316,7 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("director")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
 
@@ -327,7 +327,7 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("guionistas")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="Separados por comas"
                 />
               </div>
@@ -339,7 +339,7 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("reparto")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="Separados por comas"
                 />
               </div>
@@ -347,7 +347,7 @@ function FilmForm() {
           </div>
 
           {/* Enlaces */}
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-sky-100 shadow rounded-lg p-6">
             <h2 className="text-lg font-medium text-gray-900 mb-4">Enlaces</h2>
 
             <div className="space-y-4">
@@ -358,7 +358,7 @@ function FilmForm() {
                 <input
                   type="url"
                   {...register("linkImdb")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="https://www.imdb.com/title/..."
                 />
               </div>
@@ -370,7 +370,7 @@ function FilmForm() {
                 <input
                   type="url"
                   {...register("urlYoutube")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="https://www.youtube.com/watch?v=..."
                 />
               </div>
@@ -382,7 +382,7 @@ function FilmForm() {
                 <input
                   type="url"
                   {...register("urlMakingOf")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
 
@@ -393,7 +393,7 @@ function FilmForm() {
                 <input
                   type="text"
                   {...register("plataformas")}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="Netflix, Amazon Prime, HBO..."
                 />
               </div>

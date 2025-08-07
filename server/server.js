@@ -21,14 +21,14 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: [
-    'http://localhost:5173', 
-    'http://localhost:5174',
-    'https://gestion-rodar.vercel.app',
-    'https://*.vercel.app' // Permitir todos los dominios de Vercel
-  ],
-  credentials: true // Permitir cookies
-}));app.use(express.json({ limit: '10mb' }));
+    origin: [
+        'http://localhost:5173',
+        'http://localhost:5174',
+        'https://gestion-rodar.vercel.app',
+        'https://*.vercel.app' // Permitir todos los dominios de Vercel
+    ],
+    credentials: true // Permitir cookies
+})); app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
