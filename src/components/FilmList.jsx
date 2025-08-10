@@ -27,30 +27,28 @@ function FilmList() {
   };
 
 
-  // esta parte lo he corregido yo
   const deleteFilm = async (id) => {
-  console.log("Botón de eliminar clickeado", id);
-  const confirmado = window.confirm("¿Estás seguro de que quieres eliminar esta filmografía?");
-  console.log("Usuario confirmó:", confirmado);
+    console.log("Botón de eliminar clickeado", id);
+    const confirmado = window.confirm("¿Estás seguro de que quieres eliminar esta filmografía?");
+    console.log("Usuario confirmó:", confirmado);
 
-  if (confirmado) {
+    if (!confirmado) {
+      console.log("❌ Eliminación cancelada. No se hace nada.");
+      return;
+    }
+
     try {
       const apiUrl = import.meta.env.PROD ? "/api" : import.meta.env.VITE_API_URL;
       console.log("Eliminando en backend...");
       await axios.delete(`${apiUrl}/eliminarFilmografia/${id}`);
       console.log("Respuesta del backend OK, actualizando estado...");
       setFilms(films.filter((film) => film._id !== id));
+      alert("Filmografía eliminada correctamente");
     } catch (error) {
       console.error("Error deleting film:", error);
       alert("Error al eliminar la filmografía");
     }
-  } else {
-    console.log("❌ Eliminación cancelada. No se hace nada.");
-    return ;
-  }
-};
-
-// hasta aqui
+  };
 
   const filteredFilms = films.filter((film) => {
     if (filter === "all") return true;
