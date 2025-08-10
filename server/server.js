@@ -54,42 +54,9 @@ const connectDB = async () => {
 
         console.log('✅ Conexión exitosa a MongoDB Atlas');
 
-        // Crear usuario admin por defecto si no existe
-        await createDefaultAdmin();
-
     } catch (error) {
         console.error('❌ Error conectando a MongoDB:', error.message);
         process.exit(1);
-    }
-};
-
-// Función para crear usuario admin por defecto
-const createDefaultAdmin = async () => {
-    try {
-        const { default: User } = await import('./models/User.js');
-
-        // Verificar si ya existe el usuario Rodar2025
-        const adminExists = await User.findOne({ username: 'Rodar2025' });
-
-        if (!adminExists) {
-            // Crear el nuevo usuario admin
-            const defaultAdmin = new User({
-                username: 'Rodar2025',
-                email: 'admin@filmografias.com',
-                password: '#Rodar2025@Rodar',
-                role: 'admin'
-            });
-
-            await defaultAdmin.save();
-            console.log('✅ Usuario admin Rodar2025 creado correctamente');
-            console.log('   Username: Rodar2025');
-            console.log('   Password: #Rodar2025@Rodar');
-        } else {
-            console.log('ℹ️  Usuario admin Rodar2025 ya existe');
-        }
-
-    } catch (error) {
-        console.error('Error creando usuario admin:', error);
     }
 };
 
