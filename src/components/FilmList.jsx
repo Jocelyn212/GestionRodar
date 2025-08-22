@@ -113,7 +113,7 @@ function FilmList() {
             className="bg-white overflow-hidden shadow rounded-lg"
           >
             <div className="aspect-w-3 aspect-h-4">
-              <img
+             <img
                 src={film.urlPoster}
                 alt={film.titulo}
                 className="w-full h-64 object-cover"
